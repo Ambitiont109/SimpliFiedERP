@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
-import axios from '../store/axios';
+import React, { useState } from "react";
+import axios from "@/store/axios";
 
 function LoginScreen() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login/', { username, password });
+      const response = await axios.post(
+        "/api/login/",
+        { username, password },
+        { headers: { "No-Auth": true } }
+      );
       const token = response.data.token;
 
       // Save the token locally (Consider using cookies or session storage for enhanced security)
-      localStorage.setItem('authToken', token);
+      localStorage.setItem("authToken", token);
 
       // Redirect to homepage or dashboard after successful login
-      window.location.href = '/';
+      window.location.href = "/";
     } catch (err) {
-      setError('Invalid credentials or error logging in.');
+      setError("Invalid credentials or error logging in.");
     }
   };
 
@@ -33,7 +37,9 @@ function LoginScreen() {
                   <h2 className="text-dark mb-10 text-[32px] font-bold">
                     Sign In
                   </h2>
-                  {error && <p className="text-red-500 text-xs italic">{error}</p>}
+                  {error && (
+                    <p className="text-red-500 text-xs italic">{error}</p>
+                  )}
                   <form onSubmit={handleSubmit}>
                     <div className="mb-8">
                       <label className="mb-3 block text-xs text-[#ACB6BE]">

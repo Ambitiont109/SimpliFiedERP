@@ -6,10 +6,15 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("authToken"); // Fetch your token from where you store it (e.g., localStorage)
-    if (token) {
-      config.headers["Authorization"] = `Token ${token}`;
+    console.log(config.headers)
+    if(config.headers['No-Auth']) delete config.headers['No-Auth']
+    else{
+      const token = localStorage.getItem("authToken"); // Fetch your token from where you store it (e.g., localStorage)    
+      if (token) {
+        config.headers["Authorization"] = `Token ${token}`;
+      }
     }
+    
     return config;
   },
   (error) => {    
