@@ -12,4 +12,4 @@ class ItemViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'location']
     ordering_fields = ['name', 'quantity', 'location']
     filterset_fields = {'quantity': ['exact', 'lte', 'gte']}
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [filters.OrderingFilter, DjangoFilterBackend, filters.SearchFilter]

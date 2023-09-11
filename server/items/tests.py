@@ -124,11 +124,11 @@ class TestItemsAPI:
         baker.make(Item, quantity=50, name="Socks")
         baker.make(Item, quantity=12, name="Jackets")
         response = authenticated_client.get(
-            f'{self.endpoint}?search=shoes&order=-quantity&quantity__gte=16'
+            f'{self.endpoint}?search=shoes&ordering=quantity&quantity__gte=16'
         )
         assert response.status_code == 200
         response_data = json.loads(response.content)
         assert response_data['count'] == 3
-        assert response_data['results'][0]['name'] == "Running Shoes"
+        assert response_data['results'][0]['name'] == "Athletic Shoes"
 
 
