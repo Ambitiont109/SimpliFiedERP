@@ -111,3 +111,24 @@ class TestItemsAPI:
         response_data = json.loads(response.content)
         assert response_data['count'] == pagination_page_size * 2
         assert len(response_data['results']) == pagination_page_size
+
+    def test_complex_filtering(self, authenticated_client):
+        baker.make(Item, quantity=25, name="T-Shirts")
+        baker.make(Item, quantity=15, name="Jeans")
+        baker.make(Item, quantity=10, name="Dresses")
+        baker.make(Item, quantity=20, name="Sweaters")
+        baker.make(Item, quantity=30, name="Running Shoes")
+        baker.make(Item, quantity=11, name="Oxford Shoes")
+        baker.make(Item, quantity=16, name="Athletic Shoes")
+        baker.make(Item, quantity=17, name="Boat Shoes")
+        baker.make(Item, quantity=50, name="Socks")
+        baker.make(Item, quantity=12, name="Jackets")
+        response = authenticated_client.get(
+            f'{self.endpoint}?search=shoes&order=-quantity&quantity__gte=16'
+        )
+        assert response.status_code == 200
+        response_data = json.loads(response.content)
+        assert response_data['count'] == 3
+        assert response_data['results'][0]['name'] == "Running Shoes"
+
+
