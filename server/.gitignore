@@ -14,3 +14,4 @@ htmlcov/
 django.log
 .envfile
 .DS_Store
+db.sqlite3
