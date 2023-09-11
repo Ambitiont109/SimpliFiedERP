@@ -36,10 +36,10 @@ Simple Item Management System that can Create, Update, Delete, Sort, Filter, and
    git clone https://github.com/Ambitiont109/SimpliFiedERP.git
 2. **Navigate to the project directory**:
    ```bash
-   git clone https://github.com/Ambitiont109/SimpliFiedERP.git
+   cd SimpliFiedERP
 3. **Build and run the project using docker-compose:**:
    ```bash
-   docker-compose up --build
+   docker-compose up -d
 
 ## Usage
 ### Run Pytest:
