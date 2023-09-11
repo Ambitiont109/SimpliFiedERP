@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-w^xh1g%41r_y1*&)k49dcnmblh_n2oz=5jqo(b*00yx=(9ngp*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Set the ALLOWED_HOST to the value of environment variable separated by space. Set [] if environment variable doesn't exist
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default=None, cast=lambda v: [] if v is None else [s.strip() for s in v.split(' ')])
 
 
 # Application definition
@@ -139,9 +140,8 @@ REST_FRAMEWORK = {
 }
 
 
-
-# Cors Configuration
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+# CORS Configuration
+# Set the with value of environment variable separated by space.
+CORS_ALLOWED_ORIGINS = config('DJANGO_CORS_ALLOWED_ORIGINS',
+                              default='http://localhost:3000 http://127.0.0.1:3000',
+                              cast=lambda v: [s.strip() for s in v.split(' ')])
